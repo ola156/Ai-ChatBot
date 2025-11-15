@@ -1,35 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ChatMessage from "./ChatMessage";
 
-function ChatMessages() {
-  const chatMessages = [
-    {
-      message: "Hello Chatbot",
-      sender: "user",
-      id: "id1",
-    },
-    {
-      message: "Hello! How can I help you?",
-      sender: "robot",
-      id: "id2",
-    },
-    {
-      message: "Hello! can i get the date?",
-      sender: "user",
-      id: "id3",
-    },
-    {
-      message: "Yes! October 5th",
-      sender: "robot",
-      id: "id4",
-    },
-  ];
+function ChatMessages({ chatMessages }) {
+  const chatMessagesRef = useRef(null);
+  useEffect(() => {
+    console.log("v");
+    const containerElem = chatMessagesRef.current;
+    if (containerElem) {
+      containerElem.scrollTop = containerElem.scrollHeight;
+    }
+  }, [chatMessages]);
+
   return (
-    <>
+    <div className="chat-messages-container" ref={chatMessagesRef}>
       {chatMessages.map(({ message, sender, id }) => {
         return <ChatMessage key={id} message={message} sender={sender} />;
       })}
-    </>
+    </div>
   );
 }
 
